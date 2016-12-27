@@ -7,20 +7,18 @@
     "handler": "index"
   },
   "scripts": {
-    "test": "nvc && NODE_PATH=./lib mocha --reporter spec --check-leaks -r test/support.js test/unit/**",
     "setup": "node-lambda setup",
-
+    "lintlib": "eslint --config .eslintrc.json lib",
+    "linttest": "eslint --config .testeslintrc.json test",
+    "lint": "npm run lintlib && npm run linttest",
+    "test": "nvc && npm run lint && NODE_PATH=./lib mocha --reporter spec --check-leaks -r test/support.js test/unit/**",
     "function": "nvc && NODE_PATH=./lib node-lambda run -H lib/handlers/${npm_package_config_handler}.handler",
-
     "clean": "rm -rf ./build/",
-
     "prebuild": "rm -rf ./build/.pkg && mkdir -p ./build/.pkg",
     "build": "cp {package.json,lib/*.js} build/.pkg/ && cd build/.pkg && npm install --production",
     "postbuild": "rm -f ./build/.pkg/package.json",
-
     "prepackage": "npm run build && cp lib/handlers/${npm_package_config_handler}.js build/.pkg",
     "package": "node-lambda package -D ./build/.pkg -n ${npm_package_config_handler} -e production",
-
     "deploy": "node-lambda deploy"
   },
   "repository": {
@@ -36,6 +34,10 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
+    "eslint": "^3.12.2",
+    "eslint-plugin-chai-expect": "^1.1.1",
+    "eslint-plugin-mocha": "^4.8.0",
+    "eslint-plugin-sinon": "^0.2.0",
     "mocha": "^3.2.0",
     "node-lambda": "^0.8.11",
     "node-version-checker": "^2.0.0",

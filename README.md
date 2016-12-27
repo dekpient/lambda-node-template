@@ -1,8 +1,9 @@
 # AWS Lambda (NodeJS 4.3) Template
 
-* node-lambda
+* [node-lambda](https://www.npmjs.com/package/node-lambda)
 * mocha, chai, sinon, proxyquire
 * node-version-checker
+* eslint
 
 ## Scripts
 
@@ -14,3 +15,8 @@
 ## NodeJS 4.3 Features
 
 http://node.green/
+
+## TODO
+
+* Try `ava`, e.g. [PR](https://github.com/electron/windows-installer/pull/57/files)
+* [Silent by default](https://github.com/npm/npm/issues/8821), set `alias npms='npm run -s'` for now
