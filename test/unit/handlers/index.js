@@ -1,12 +1,5 @@
 'use strict';
 
-const chai = require('chai');
-chai.use(require('chai-as-promised'));
-chai.use(require('sinon-chai'));
-const expect = chai.expect;
-const sinon =  require('sinon');
-const proxyquire =  require('proxyquire');
-
 const sample = require('sample');
 
 describe('Index', () => {

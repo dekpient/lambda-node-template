@@ -7,7 +7,7 @@
     "handler": "index"
   },
   "scripts": {
-    "test": "nvc && NODE_PATH=./lib mocha --reporter spec --check-leaks test/unit/**",
+    "test": "nvc && NODE_PATH=./lib mocha --reporter spec --check-leaks -r test/support.js test/unit/**",
     "setup": "node-lambda setup",
 
     "function": "nvc && NODE_PATH=./lib node-lambda run -H lib/handlers/${npm_package_config_handler}.handler",
