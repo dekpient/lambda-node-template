@@ -19,7 +19,7 @@ describe('Index', () => {
     mockSample = sandbox.mock(sample);
     callback = sandbox.spy();
 
-    index = proxyquire('index', { './sample' : mockSample });
+    index = proxyquire('handlers/index', { './sample' : mockSample });
   });
 
   afterEach(() => {

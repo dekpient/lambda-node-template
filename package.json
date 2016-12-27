@@ -3,11 +3,24 @@
   "version": "0.1.0",
   "description": "NodeJS on AWS Lambda",
   "main": "index.js",
+  "config": {
+    "handler": "index"
+  },
   "scripts": {
-    "test": "nvc && NODE_PATH=./lib mocha --reporter spec --check-leaks test/unit",
+    "test": "nvc && NODE_PATH=./lib mocha --reporter spec --check-leaks test/unit/**",
     "setup": "node-lambda setup",
-    "run": "nvc && NODE_PATH=./lib node-lambda run -H lib/index.handler",
-    "package": "node-lambda package",
+
+    "function": "nvc && NODE_PATH=./lib node-lambda run -H lib/handlers/${npm_package_config_handler}.handler",
+
+    "clean": "rm -rf ./build/",
+
+    "prebuild": "rm -rf ./build/.pkg && mkdir -p ./build/.pkg",
+    "build": "cp {package.json,lib/*.js} build/.pkg/ && cd build/.pkg && npm install --production",
+    "postbuild": "rm -f ./build/.pkg/package.json",
+
+    "prepackage": "npm run build && cp lib/handlers/${npm_package_config_handler}.js build/.pkg",
+    "package": "node-lambda package -D ./build/.pkg -n ${npm_package_config_handler} -e production",
+
     "deploy": "node-lambda deploy"
   },
   "repository": {
@@ -29,6 +42,9 @@
     "proxyquire": "^1.7.10",
     "sinon": "^1.17.6",
     "sinon-chai": "^2.8.0"
+  },
+  "dependencies": {
+    "duo_api": "duosecurity/duo_api_nodejs"
   },
   "engines": {
     "node": ">=4.3.2 <5.0"
